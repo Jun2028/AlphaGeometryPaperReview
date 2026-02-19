@@ -1,0 +1,9 @@
+# Source paper and local extraction artifacts
+docs/s41586-023-06747-5.pdf
+docs/s41586-023-06747-5.txt
+docs/extracted_images/
+docs/page_renders/
+
+# Python cache
+__pycache__/
+*.pyc
