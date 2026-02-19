@@ -69,3 +69,177 @@ Adjusted image sizing in `AlphaGeometry.md` to prevent full-width rendering and 
 3. Standardized larger appendix visuals/tables to width `760` to avoid page-filling behavior while preserving legibility.
 
 This change addresses the issue of simple illustrations occupying the full page width.
+## Follow-up Update
+
+Date: 2026-02-19 (third follow-up)
+
+Updated `AlphaGeometry.md` section **Q3** to include explicit compute and cost comparison against AlphaProof/TTRL:
+
+1. Added a compact compute table for AlphaGeometry vs AlphaProof.
+2. Included your provided AlphaProof numbers: 100,000 TPU-days (training) + 80,000 TPU-days (TTRL) = 180,000 TPU-days.
+3. Added direct money conclusion: AlphaProof+TTRL is more expensive in practice.
+4. Kept the conceptual explanation that this is about domain setup/symbolic leverage, not Euclidean geometry being "easy".
+## Follow-up Update
+
+Date: 2026-02-19 (fourth follow-up)
+
+Corrected `AlphaGeometry.md` section **Q3** to restore prior rationale content that was removed in the previous edit.
+
+1. Reinstated the 4 rationale points (DD+AR leverage, narrower domain structure, not because geometry is easy, and why TTRL-style compute fits broader formal search).
+2. Kept the newly added compute table and money comparison.
+3. Added a short note clarifying the rationale comparison is an inference from system design and reported behavior.
+## Follow-up Update
+
+Date: 2026-02-19 (fifth follow-up)
+
+Refined `AlphaGeometry.md` section **Q1** to remove vague wording and add mechanism-level detail from the paper.
+
+1. Replaced the prior short generic statement with explicit verification mechanics:
+   - Specialized geometry language/environment.
+   - Logical + numerical step checks.
+   - DD as Horn-clause deductive closure.
+   - AR as linear-equation reasoning via Gaussian elimination.
+   - DD/AR alternating to fixed point + traceback extraction.
+2. Added explicit comparison against Lean-style kernels:
+   - no small foundational trusted kernel,
+   - no independent kernel re-check of proof terms,
+   - narrow Euclidean domain scope.
+## Follow-up Update
+
+Date: 2026-02-19 (sixth follow-up)
+
+Updated `AlphaGeometry.md` to make the paper reference a clickable hyperlink to the Nature page:
+
+- https://www.nature.com/articles/s41586-023-06747-5
+## Follow-up Update
+
+Date: 2026-02-19 (seventh follow-up)
+
+Updated the **Limitations** section in `AlphaGeometry.md` to clarify what "geometric inequalities/combinatorial geometry are outside scope" means.
+
+1. Added a concrete geometric-inequality example:
+   - triangle inequality-style target: `a^2(b+c-a)+b^2(c+a-b)+c^2(a+b-c) <= 3abc`.
+2. Added a concrete combinatorial-geometry example:
+   - circle packing / maximizing non-overlapping circles in a region.
+3. For each example, added explicit reasons AlphaGeometry cannot currently address it:
+   - DD+AR is mainly geometric-rule + equality deduction, not full inequality-tool reasoning.
+   - current framework is not a discrete counting/optimization engine over combinatorial configurations.
+4. Kept the rest of the limitations list and renumbered for consistency.
+## Follow-up Update
+
+Date: 2026-02-19 (eighth follow-up)
+
+Fixed context for the hard-problem diagram near Section 2 in `AlphaGeometry.md`.
+
+1. Replaced the vague line "Example of a much harder solved problem state" with an explicit "how to read this figure" block.
+2. Clarified that the figure is an **auxiliary-construction stage** for IMO 2015 P3, not the original problem diagram.
+3. Explicitly stated where auxiliary constructions appear in the shown zoom (`D` and `E`), and noted the paper reports three auxiliary points in the full solution.
+4. Replaced the previous image with a more informative annotated zoom:
+   - `docs/assets/fig1_imo2015_aux_zoom.jpg`
+## Follow-up Update
+
+Date: 2026-02-19 (ninth follow-up)
+
+Improved the Fig. 3 section in `AlphaGeometry.md` based on feedback.
+
+1. Re-cropped `docs/assets/fig3_synthetic_data_generation.png` to remove lower-page body paragraphs/margins and keep only the relevant figure region.
+2. Reduced display width from 760 to 620 so it no longer dominates page layout.
+3. Added explicit context under "Main-paper Fig. 3":
+   - panel a = premise sampling,
+   - panel b = DAG-style symbolic closure,
+   - traceback from target node (example `HA ⟂ BC`) to minimal dependency subgraph,
+   - panel c = extraction of `(P, N, G(N))`,
+   - where auxiliary constructions (e.g., `E`, `D`) come from.
+
+This addresses both context and readability concerns for what is arguably the core figure.
+## Follow-up Update
+
+Date: 2026-02-19 (tenth follow-up)
+
+Expanded Section **3.5 Step E: prune proof graphs to minimal forms** in `AlphaGeometry.md`.
+
+1. Replaced the single condensed sentence with an explicit step-by-step pruning workflow.
+2. Defined what "reachability" means operationally: whether DD+AR can still deduce the target conclusion after removing auxiliary subsets.
+3. Clarified the paper's "exhaustive trial-and-error" behavior over auxiliary-point subsets.
+4. Added why pruning matters (remove vacuous constructions, improve training signal, also used after successful test-time proofs).
+## Follow-up Update
+
+Date: 2026-02-19 (eleventh follow-up)
+
+Adjusted wording in the hard-problem figure context (Section 2) in `AlphaGeometry.md`.
+
+1. Replaced "create extra constraints" with paper-aligned phrasing.
+2. New wording now states that auxiliary constructions provide **new inputs** and let DD+AR **expand deduction closure**.
+3. This avoids the incorrect implication that the setting becomes stricter in a restrictive sense.
+## Follow-up Update
+
+Date: 2026-02-19 (twelfth follow-up)
+
+Clarified the "Cross-domain framing" block in `AlphaGeometry.md` (Section 6.3).
+
+1. Replaced the contextless one-line lead with explicit purpose statements for Extended Data Tables 3 and 4.
+2. Explained why those tables are included: conceptual support for the reusable "auxiliary construction + symbolic closure" pattern, not new benchmark performance claims.
+3. Added guidance that this part is secondary for readers focused only on IMO-AG-30 numbers.
+4. Fixed formatting artifacts from the initial edit.
+## Follow-up Update
+
+Date: 2026-02-19 (thirteenth follow-up)
+
+Expanded Section **3.4 Step D: DD + AR integration** in `AlphaGeometry.md` to make it self-contained.
+
+1. Clarified DD vs AR roles in plain language.
+2. Added explicit explanation of Horn-clause rules (`Q <- P1,...,Pk`) and what that means operationally.
+3. Added concrete definition of "geometry equality" with paper-aligned examples:
+   - angle equality mapping,
+   - ratio equality mapping.
+4. Expanded the DD<->AR alternation loop step-by-step (how facts/equalities flow between engines).
+5. Kept traceback explanation but made it clearer which part is DD-side vs AR-side.
+## Follow-up Update
+
+Date: 2026-02-19 (fourteenth follow-up)
+
+Clarified the term "target object set" in `AlphaGeometry.md` (Fig. 3 explanation and Step C sentence).
+
+1. Added inline bracket definition:
+   - object set = objects explicitly present/mentioned in the theorem goal (conclusion `N`).
+2. Updated both nearby sentences to avoid undefined jargon.
+## Follow-up Update
+
+Date: 2026-02-19 (fifteenth follow-up)
+
+Updated first occurrence of "geometric rule closure" in `AlphaGeometry.md` with an inline bracket definition:
+
+- "(repeatedly apply geometry rules until no new fact can be deduced)"
+
+This was added exactly at first appearance, as requested.
+## Follow-up Update
+
+Date: 2026-02-19 (sixteenth follow-up)
+
+Expanded Section 4 in `AlphaGeometry.md` to explicitly define `(P, N, G(N))` next to the serialization line.
+
+1. Added concrete definitions:
+   - `N` = target conclusion node,
+   - `P` = minimal needed premises after traceback,
+   - `G(N)` = dependency proof subgraph for `N` from `P`.
+2. Added an explicit mapping from serialized sequence fields to symbols:
+   - `<premises>` = `P`, `<conclusion>` = `N`, `<proof>` = `G(N)`.
+
+This addresses the missing self-contained explanation.
+## Follow-up Update
+
+Date: 2026-02-19 (seventeenth follow-up)
+
+Expanded the "infinite branching" explanation in `AlphaGeometry.md` (Section 3.3).
+
+1. Added a short toy-intuition block that explains why auxiliary construction introduces infinite branching.
+2. Clarified that there are many construction families for a new point and infinitely many placements within some families.
+3. Added the practical resolution: LM proposes likely constructions; DD+AR verifies and expands closure.
+4. Per instruction, re-read the full `AlphaGeometry.md` after edit.
+## Follow-up Update
+
+Date: 2026-02-19 (eighteenth follow-up)
+
+Added an inline bracket explanation for the DD rule template in `AlphaGeometry.md`:
+
+- `Q(x) <- P1(x), ..., Pk(x)` now includes a plain-language readout of what it means operationally.

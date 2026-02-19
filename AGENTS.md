@@ -41,3 +41,5 @@ In this repo, we aim to write a AlphaGeometry.md, a markdown file, introducing t
 - **Do NOT** be too verbose in the presentation file. **NEVER** throw in long paragraphs. Put things in point forms and at most medium-length sentences. Optimize for readability and conciseness.
 
 - After each write/rewrite, read the whole thing and make sure its self-contained, good and up to the standards.
+
+- Every diagram/table included **MUST** be explained in context. Otherwise they are useless.
