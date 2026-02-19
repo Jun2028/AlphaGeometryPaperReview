@@ -1,2 +1,2 @@
 # AlphaGeometryPaperReview
-A review of the 2024 paper of AlphaGeometry on Nature (s41586-023-06747-5).
+An overview of the 2024 paper of AlphaGeometry on Nature (s41586-023-06747-5).
