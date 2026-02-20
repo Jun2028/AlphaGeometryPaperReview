@@ -15,7 +15,7 @@ The key idea is to avoid human demonstrations entirely:
 
 Main headline result: it solves 25/30 translated IMO geometry problems (IMO-AG-30), versus 10 for the prior SOTA Wu's method and 18 for the strongest symbolic+heuristic baseline.
 
-Fig. 1(a-d): model loop on a simple theorem (focus on `b/c`):
+Fig. 1(a-d): model loop on a simple theorem:
 
 1. **a:** input theorem statement/diagram.
 2. **b:** symbolic engine runs first; if it cannot prove yet, control passes to LM.
@@ -133,7 +133,7 @@ How DD and AR interact:
 4. Those new equalities are fed back to DD as additional inputs.
 5. This alternation repeats until no new statement appears (fixed-point closure).
 
-Traceback (AI-relevant view):
+Traceback:
 
 1. **What it is:** a dependency-minimization pass that extracts the smallest proof subgraph needed for a target statement.
 2. **Why it matters:** removes spurious derivation chains, improves training signal quality, and makes proof pruning possible.
