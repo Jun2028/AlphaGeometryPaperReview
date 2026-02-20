@@ -243,3 +243,95 @@ Date: 2026-02-19 (eighteenth follow-up)
 Added an inline bracket explanation for the DD rule template in `AlphaGeometry.md`:
 
 - `Q(x) <- P1(x), ..., Pk(x)` now includes a plain-language readout of what it means operationally.
+## Follow-up Update
+
+Date: 2026-02-19 (nineteenth follow-up)
+
+Reworked the Section 2 figure block in `AlphaGeometry.md` per feedback.
+
+1. Removed the previous "before/after" and separate hard-example images that lacked clear context.
+2. Replaced with a single Fig. 1(a-d) focus block centered on model loop understanding, especially panels `b/c`.
+3. Added panel-by-panel explanation of the symbolic-engine <-> LM construction loop and how `d` shows mixed proof steps.
+4. Added new figure asset:
+   - `docs/assets/fig1_toprow_abcd.png`
+5. Per instruction, re-read the full `AlphaGeometry.md` after edit.
+## Follow-up Update
+
+Date: 2026-02-19 (twentieth follow-up)
+
+Updated Section **3.1 Step A** in `AlphaGeometry.md`.
+
+1. Added the paper's scale detail: nearly **1 billion** sampled random premises.
+2. Replaced the vague label "Reference:" with explicit context.
+3. Clarified that the included table (`Extended Data Table 1`) shows example construction actions used to generate those premises.
+4. Per instruction, re-read the full `AlphaGeometry.md` after edit.
+## Follow-up Update
+
+Date: 2026-02-19 (twenty-first follow-up)
+
+Moved Fig. 1(a-d) model-loop block in `AlphaGeometry.md` to improve section alignment.
+
+1. Removed the Fig. 1 loop diagram/explanation from Section 2 (environment section).
+2. Inserted the same Fig. 1 block at the top of Section 4 (model structure/training section), where it belongs conceptually.
+3. Kept the existing panel-by-panel context (a/b/c/d), with focus on model loop behavior.
+4. Per instruction, re-read the full `AlphaGeometry.md` after edit.
+## Follow-up Update
+
+Date: 2026-02-19 (twenty-second follow-up)
+
+Updated Q3 compute comparison in `AlphaGeometry.md` to include a rough AlphaGeometry transformer-training estimate.
+
+1. Added back-of-envelope estimate: **~100-500 TPUv3 chip-days** (peak-equivalent) for AG transformer training.
+2. Added equivalent wall-clock on one 4x4 TPUv3 slice: **~6-31 days** (peak-equivalent).
+3. Added explicit order-of-magnitude comparison vs AlphaProof+TTRL (`180,000 TPU-days`), noting AG LM training is still hundreds of times lower.
+4. Kept caveat that this is rough and depends on utilization/hardware-generation details.
+5. Per instruction, re-read the full `AlphaGeometry.md` after edit.
+## Follow-up Update
+
+Date: 2026-02-19 (twenty-third follow-up)
+
+Refined traceback explanation in `AlphaGeometry.md` for general AI audience.
+
+1. Replaced the terse two-line traceback block with explicit **what / why / how** framing.
+2. Kept technical mechanism at one-line level only:
+   - DD side via minimal dependency chains in graph/hypergraph structures.
+   - AR side via minimal parent-equation subset (MILP in the paper).
+3. Emphasized why it matters for ML: cleaner training signal and pruning feasibility.
+4. Per instruction, re-read the full `AlphaGeometry.md` after edit.
+## Follow-up Update
+
+Date: 2026-02-19 (twenty-fourth follow-up)
+
+Moved the Fig. 1(a-d) model-loop block in `AlphaGeometry.md` to match narrative flow.
+
+1. Relocated the Fig. 1(a-d) explanation and image from Section 4 to the intro (Section 1), right after the main headline result.
+2. Removed the duplicate block from Section 4.
+3. This places model-loop context earlier for readers before deeper technical sections.
+4. Per instruction, re-read the full `AlphaGeometry.md` after edit.
+## Follow-up Update
+
+Date: 2026-02-19 (twenty-fifth follow-up)
+
+Rewrote the Section 6.3 appendix-table block in `AlphaGeometry.md`.
+
+1. Replaced informal/conversational tone with presentation-style phrasing.
+2. Explicitly labeled table roles:
+   - Extended Data Table 3 = cross-domain auxiliary-construction pattern.
+   - Extended Data Table 4 = geometry-inequality template mapping.
+3. Added explicit figure labels before each embedded table image:
+   - "Table 3: auxiliary constructions across domains"
+   - "Table 4: geometry vs inequality under the same framework"
+4. Kept the core takeaway: reusable "auxiliary construction + symbolic closure" pattern.
+5. Per instruction, re-read the full `AlphaGeometry.md` after edit.
+## Follow-up Update
+
+Date: 2026-02-19 (twenty-sixth follow-up)
+
+Fixed Table 3/Table 4 visual alignment block in `AlphaGeometry.md`.
+
+1. Replaced plain text labels with consistent bold labels:
+   - `Table 3. ...`
+   - `Table 4. ...`
+2. Wrapped each image in its own paragraph block for stable separation.
+3. Standardized both table image widths to `700` for consistent alignment.
+4. Per instruction, re-read the full `AlphaGeometry.md` after edit.

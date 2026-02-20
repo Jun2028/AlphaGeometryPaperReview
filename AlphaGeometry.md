@@ -15,6 +15,16 @@ The key idea is to avoid human demonstrations entirely:
 
 Main headline result: it solves 25/30 translated IMO geometry problems (IMO-AG-30), versus 10 for the prior SOTA Wu's method and 18 for the strongest symbolic+heuristic baseline.
 
+Fig. 1(a-d): model loop on a simple theorem (focus on `b/c`):
+
+1. **a:** input theorem statement/diagram.
+2. **b:** symbolic engine runs first; if it cannot prove yet, control passes to LM.
+3. **c:** LM proposes one auxiliary construction (`Construct ...`), adding new objects/relations.
+4. Engine runs again on the expanded state; this loop repeats until solved.
+5. **d:** final proof mixes LM construction steps and symbolic deduction steps.
+
+<img src="docs/assets/fig1_toprow_abcd.png" alt="Fig. 1(a-d): AlphaGeometry loop with symbolic deduce, language-model construction, and final solution" width="700" />
+
 ## 2. What Geometry Environment Is Used?
 
 AlphaGeometry does **not** operate in full general-purpose formal math languages (for example Lean). Instead, it uses a specialized geometry language/environment (in the line of GEX/JGEX/MMP/GeoLogic) that is narrow but efficient for classical Euclidean geometry.
@@ -27,20 +37,6 @@ Environment characteristics:
 4. It was extended with integers/fractions/constants to support practical arithmetic inside geometry proofs.
 5. Coverage is strong but limited: about 75% of IMO geometry problems can be translated into this environment.
 
-Quick visual of the proof-search loop (simple problem before and after one auxiliary construction):
-
-| Before auxiliary construction | After auxiliary construction |
-| --- | --- |
-| <img src="docs/assets/fig1_simple_problem.png" alt="Simple geometry problem" width="280" /> | <img src="docs/assets/fig1_with_aux_point.png" alt="After constructing midpoint D" width="280" /> |
-
-Harder example context (from paper Fig. 1, IMO 2015 P3):
-
-1. This is the **auxiliary-construction stage** of a hard proof, not the original clean problem diagram.
-2. The highlighted added points here are `D` and `E` (orange in the paper figure); the full IMO 2015 P3 solution in the paper uses **three** auxiliary points.
-3. These added objects give the symbolic engine new inputs (for example added right-angle/intersection relations), so DD+AR can expand its deduction closure and reach the conclusion.
-
-<img src="docs/assets/fig1_imo2015_aux_zoom.jpg" alt="IMO 2015 P3 auxiliary-construction zoom; added points D and E are highlighted" width="420" />
-
 ## 3. Synthetic Data Generation
 
 This is the central algorithmic contribution.
@@ -51,7 +47,9 @@ The system uses a constructive diagram-builder language: rather than randomly as
 
 Examples include: adding midpoint/incenter/excenter points, constructing perpendiculars/parallels, reflections, tangencies, and ratio-constrained points.
 
-Reference:
+Scale note from the paper: they sampled **nearly 1 billion** such random premises (in a highly parallel setting), then ran symbolic deduction/traceback to extract synthetic theorem-proof data.
+
+Example construction actions used to create those premises (Extended Data Table 1):
 
 <img src="docs/assets/ext_table1_construction_actions.jpg" alt="Extended Data Table 1: construction actions" width="760" />
 
@@ -109,7 +107,7 @@ AlphaGeometry combines two deterministic engines with different jobs:
 1. **DD (Deductive Database):** forward-rule deduction over symbolic geometry facts.
 2. **AR (Algebraic Reasoning):** algebraic deduction over equalities (angles/ratios/distances).
 
-What DD is doing (plain language):
+What DD is doing:
 
 1. DD stores facts like `collinear`, `parallel`, `perpendicular`, `concyclic`, equal angles/segments, etc.
 2. It repeatedly applies rule templates of the form `Q(x) <- P1(x), ..., Pk(x)`.
@@ -135,10 +133,12 @@ How DD and AR interact:
 4. Those new equalities are fed back to DD as additional inputs.
 5. This alternation repeats until no new statement appears (fixed-point closure).
 
-How traceback is done:
+Traceback (AI-relevant view):
 
-1. DD side: find minimal dependency chains through transitivity structures (graphs/hypergraphs).
-2. AR side: recover minimal parent equations via a mixed-integer linear program.
+1. **What it is:** a dependency-minimization pass that extracts the smallest proof subgraph needed for a target statement.
+2. **Why it matters:** removes spurious derivation chains, improves training signal quality, and makes proof pruning possible.
+3. **How on DD side:** treat rule-derived facts as dependency graphs/hypergraphs and keep shortest/minimal supporting chains.
+4. **How on AR side:** select the smallest subset of parent equations that can still derive the target equality (optimized in the paper via MILP).
 
 Reference examples for AR proofs:
 
@@ -179,7 +179,7 @@ Training data is serialized as a sequence like:
 
 `<premises><conclusion><proof>`
 
-Definitions (self-contained):
+Definitions:
 
 1. `N`: one target conclusion statement chosen from the deduction graph (for example `HA ⟂ BC`).
 2. `P`: the minimal subset of sampled premises needed to prove `N` after traceback.
@@ -277,15 +277,19 @@ Illustrative geometry from the generalized-theorem analysis:
 
 Appendix tables:
 
-1. `Extended Data Table 3` shows the same pattern beyond geometry: hard problems often need an exogenous construction/term first, then a symbolic engine can finish the rest.
-2. `Extended Data Table 4` gives a line-by-line analogy between geometry and inequality:
-   same template = premises -> symbolic engine fails -> add auxiliary term(s) -> symbolic engine succeeds.
-3. For this report, keep them as conceptual evidence that AlphaGeometry's "auxiliary construction + symbolic closure" design is a reusable algorithmic pattern, not only a geometry trick.
-4. If you only care about IMO-AG-30 performance, these are secondary and can be skimmed.
+1. **Extended Data Table 3 (cross-domain auxiliary constructions):** beyond geometry, many hard proofs still follow the same pattern:
+   propose an exogenous term/construction first, then let a symbolic engine complete the mechanical part.
+2. **Extended Data Table 4 (geometry-inequality analogy):** line-by-line mapping of the same template:
+   premises -> symbolic engine fails -> add auxiliary term(s) -> symbolic engine succeeds.
+3. Together, these tables support the paper's claim that "auxiliary construction + symbolic closure" is a reusable algorithmic pattern, not only a geometry-specific trick.
 
-<img src="docs/assets/ext_table3_aux_other_domains.png" alt="Extended Data Table 3: auxiliary construction examples across domains" width="760" />
+**Table 3. Auxiliary constructions across domains**
 
-<img src="docs/assets/ext_table4_geometry_vs_inequality.png" alt="Extended Data Table 4: geometry vs inequality under same framework" width="760" />
+<p><img src="docs/assets/ext_table3_aux_other_domains.png" alt="Extended Data Table 3: auxiliary construction examples across domains" width="700" /></p>
+
+**Table 4. Geometry vs inequality under the same framework**
+
+<p><img src="docs/assets/ext_table4_geometry_vs_inequality.png" alt="Extended Data Table 4: geometry vs inequality under same framework" width="700" /></p>
 
 ## 7. Limitations
 
@@ -339,6 +343,12 @@ Compute comparison:
 | --- | --- |
 | AlphaGeometry | 100,000 CPU workers x 72 h for synthetic data (~300,000 CPU-days); LM training on a 4x4 TPUv3 slice; test-time search with 4 GPU workers + 10,000 CPU workers |
 | AlphaProof (+ TTRL) | 100,000 TPU-days (training) + 80,000 TPU-days (TTRL) = **180,000 TPU-days** |
+
+Rough TPU estimate for AlphaGeometry transformer training (back-of-envelope):
+
+1. Using paper details (11M steps total, batch 16/core, 32 TPUv3 cores in a 4x4 slice), a standard LM compute estimate gives roughly **~100-500 TPUv3 chip-days** (peak-equivalent).
+2. That is about **~6-31 days on one 4x4 TPUv3 slice** (peak-equivalent).
+3. Order-of-magnitude comparison: versus **180,000 TPU-days** for AlphaProof+TTRL, AlphaGeometry LM training is still much smaller (roughly hundreds of times lower), even before accounting for exact utilization/hardware-generation differences.
 
 Money comparison:
 
